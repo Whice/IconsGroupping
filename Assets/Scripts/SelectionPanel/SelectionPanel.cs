@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.Data;
-using Assets.Scripts.Elements;
+﻿using Assets.Scripts.Elements;
 using Assets.Scripts.Utils;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +13,6 @@ namespace Assets.Scripts.SelectionPanel
         [SerializeField] private Transform elementsParent = null;
 
         private IconButtonPool iconButtonPool;
-        private IconsKeeper iconsKeeper;
 
         private readonly List<IconButton> buttons = new List<IconButton>();
         private readonly List<string> foldersNames = new List<string>();
@@ -51,7 +49,7 @@ namespace Assets.Scripts.SelectionPanel
         }
         public void UpdateIcons()
         {
-            List<Sprite> sprites = this.iconsKeeper.TryGetSprites(this.foldersNames[this.dropdown.value]);
+            List<Sprite> sprites = null;//ToDo: заполнить 
 
             foreach (IconButton button in this.buttons)
             {
@@ -67,11 +65,8 @@ namespace Assets.Scripts.SelectionPanel
             }
         }
 
-        public void Initialize(IconsKeeper keeper, IconButtonPool iconButtonPool)
+        public void Initialize(IconButtonPool iconButtonPool)
         {
-            this.iconsKeeper = keeper;
-            this.foldersNames.Clear();
-            this.foldersNames.AddRange(this.iconsKeeper.folders);
             this.iconButtonPool = iconButtonPool;
 
             UpdateDropdownOptions(this.foldersNames.Select((fullName) => fullName.GetFileName()).ToList());
