@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Elements;
+﻿using Assets.Scripts.Data;
+using Assets.Scripts.Elements;
 using Assets.Scripts.Utils;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace Assets.Scripts.SelectionPanel
         private IconButtonPool iconButtonPool;
 
         private readonly List<IconButton> buttons = new List<IconButton>();
-        private readonly List<string> foldersNames = new List<string>();
+        private readonly SelectableTagCollection selectableTagCollection = new SelectableTagCollection();
         /// <summary>
         /// Очищает все текущие элементы в Dropdown и добавляет новые элементы из списка.
         /// </summary>
@@ -49,7 +50,7 @@ namespace Assets.Scripts.SelectionPanel
         }
         public void UpdateIcons()
         {
-            List<Sprite> sprites = null;//ToDo: заполнить 
+           /* List<Sprite> sprites = null;//ToDo: заполнить 
 
             foreach (IconButton button in this.buttons)
             {
@@ -62,14 +63,14 @@ namespace Assets.Scripts.SelectionPanel
                 IconButton button = this.iconButtonPool.Pop(sprite);
                 this.buttons.Add(button);
                 button.SetParent(this.elementsParent);
-            }
+            }*/
         }
 
         public void Initialize(IconButtonPool iconButtonPool)
         {
             this.iconButtonPool = iconButtonPool;
 
-            UpdateDropdownOptions(this.foldersNames.Select((fullName) => fullName.GetFileName()).ToList());
+            UpdateDropdownOptions(selectableTagCollection.forChoose.Select(tag => tag.GetName()).ToList());
 
             UpdateIcons();
             this.dropdown.onValueChanged.AddListener((_) => UpdateIcons());
